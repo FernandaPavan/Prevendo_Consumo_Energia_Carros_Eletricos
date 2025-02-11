@@ -1,25 +1,24 @@
 ## Prevendo_Consumo_Energia_Carros_Eletricos
 
-### <font color='blue'>**Machine Learning em Logística**</font>
+## <font color='blue'>**Prevendo o Consumo de Energia de Carros Elétricos**</font>
 
  ### **1. Introdução**
 
 Uma empresa do setor de transporte e logística está buscando formas de otimizar seus custos operacionais. Uma das iniciativas consideradas é a migração da sua frota de veículos para carros elétricos.
-
+<br>
 <br>
 
----
 
+---
  ### **2. Objetivo**
 
-Desenvolver um Modelo de Machine Learning para **Prever o Consumo de Energia de Carros Elétricos.**
-
+  Desenvolver um Modelo de Machine Learning capaz de **Prever o Consumo de Energia de Carros Elétricos.**
 <br>
+<br>
+
 
 ---
-
  ### **3. Organização do Projeto**
-<br>
 
 ```
 1. Introdução
@@ -34,7 +33,8 @@ Desenvolver um Modelo de Machine Learning para **Prever o Consumo de Energia de 
 6. Análise Univariada 
 7. Análise de Correlação
 8. Desenvolvimento do Projeto
-    9.1 Pré Processamento dos Dados      
+    8.1 Pré Processamento dos Dados 
+    8.2 Modelagem dos Dados     
 9. Conclusão do Projeto
 10. Referências Bibliográficas 
 ```
@@ -49,9 +49,12 @@ Este conjunto de dados [carros_eletricos](https://data.mendeley.com/datasets/tb9
 <br>
 <br>
 <br>
-### ```4.2 Dicionário de Dados ```
 
----
+
+
+
+
+### ```4.2 Dicionário de Dados ```
 
 #### **As colunas desse dataset são:**
 
@@ -115,22 +118,25 @@ Este conjunto de dados [carros_eletricos](https://data.mendeley.com/datasets/tb9
 <br>
 <br>
 
+
 ### ``` 4.4 Análise Exploratória de Dados```
 
 ---
 
 A Análise Exploratória de Dados (AED), conhecida como Exploratory Data Analysis (EDA) em inglês, é uma abordagem para investigar dados, extraindo conhecimento por meio de estatísticas e visualizações.
 
-Este resumo apresenta as características mais importantes do conjunto de dados, oferecendo uma visão geral para um README ou apresentação. Para uma imersão completa na análise, com todos os detalhes e a metodologia utilizada, consulte o script Python, disponível no material de apoio.
+Nesta análise vamos realizar um resumo que apresenta as características mais importantes do conjunto de dados, oferecendo uma visão geral para um README ou apresentação. Para uma imersão mais completa da análise, com todos os detalhes e a metodologia utilizada, consulte o script Python, disponível no material de apoio.
 <br>
 <br>
 
 
-* **Coletar os Dados:** Utilizamos a função ```pd.read_excel()``` do pacote pandas para importar um conjunto de dados a partir de um arquivo Excel chamado ```basecars.xlsx```. O conjunto de dados é armazenado na variável ```carros_eletricos```.
+* **Coletar os Dados:** Utilizamos a função ```pd.read_excel()``` do pacote pandas para importar um conjunto de dados a partir de um arquivo Excel chamado ```carros_eletricos.xlsx```. O conjunto de dados é armazenado na variável ```carros_eletricos```.
+
 
 * **Dimensão do Conjunto de Dados:** A função ```.shape``` mostra que o conjunto de dados tem 53 linhas e 25 colunas. 
 
-* **Estrutura dos Dados:** A função ```.info()``` do Pandas, identifica quais variáveis são numéricas e quais são categóricas.
+* **Estrutura dos Dados:** A função ```.info()``` do Pandas, identifica o tipo das variáveis e quais são numéricas e quais são categóricas.
+
  * **As Variáveis ​​Numéricas:** Preço_minimo, Potencia_motor, Torque_maximo, Capacidade_bateria, Alcance_WLTP,
  Distancia_eixos, Comprimento,
  Largura, Altura, Peso_vazio_minimo,
@@ -139,16 +145,14 @@ Este resumo apresenta as características mais importantes do conjunto de dados,
  Aceleracao, Potencia_maxima_carga,
  media_Consumo_energia.
 
-* **Valores Ausentes:** Utilizamos a função ```.isnull().sum()``` para obter a contagem de valores nulos em cada coluna. No total, este conjunto de dados possui 30 valores ausentes, o que corresponde a ```56%``` de todo o conjunto de dados.
- 
-* **As Variáveis com dados faltantes:** Tipo_freios, Peso_bruto_permitido, Capacidade_maxima_carga, Capacidade_porta_malas, Aceleracao, media_consumo_energia. 
-
-* **Resumo Estatístico das Variáveis Numéricas:** Utilizamos a função ```.describe().T``` para calcular estatísticas como média, desvio padrão, mínimo, máximo e quartis para as colunas numéricas (int64 e float64).
-
  * **As Variáveis ​Categóricas:** Tipo_freios,
  Tipo_acionamento, Numero_assentos, Numero_portas,
  Tamanho_pneu.
- 
+
+* **Valores Ausentes:** Utilizamos a função ```.isnull().sum()``` para obter a contagem de valores nulos em cada coluna. No total, este conjunto de dados possui 30 valores ausentes, o que corresponde a ```56%``` de todo o conjunto de dados. <u>As Variáveis faltantes são:</u> Tipo_freios, Peso_bruto_permitido, Capacidade_maxima_carga, Capacidade_porta_malas, Aceleracao, media_consumo_energia.
+
+* **Resumo Estatístico das Variáveis Numéricas:** Utilizamos a função ```.describe().T``` para calcular estatísticas como média, desvio padrão, mínimo, máximo e quartis para as colunas numéricas (int64 e float64).
+
 * **Resumo Estatístico das Variáveis Categóricas:** Utilizamos a função ```.describe(include='object')``` para obter estatísticas descritivas das colunas do tipo "object" ou "category" (string). Essa função nos permite verificar a distribuição de frequência e identificar a moda de cada variável categórica.
 <br>
 <br>
@@ -175,23 +179,22 @@ Gráfico-3, **"Resumo Estatísticos das Variáveis Numéricas"**
 ![alt text](Plot/Grafico_3_resumo_estatistico_numerico.png)
 <br>
 
-* **Insight:** Observamos que, em algumas variáveis, a média é maior que a mediana e os valores mínimos e máximos estão muito distantes. Isso sugere que a distribuição pode ser assimétrica positiva, indicando a presença de valores extremos na parte superior que "puxam" a média para cima. Em outras palavras, as variáveis não seguem uma distribuição normal e possivelmente contêm outliers.
+* **Insight:** Observamos que, em algumas variáveis, a média é maior que a mediana e os valores mínimos e máximos estão muito distantes. Isso sugere que a distribuição pode ser assimétrica positiva, indicando a presença de valores extremos na parte superior que "puxam" a média para cima. Ou seja, as variáveis não seguem uma distribuição normal e possivelmente contêm outliers.
+<br>
 <br>
 <br>
 
 ### **5. Identificação e Tratamento dos Dados**
 
 ---
-
 Nesta etapa, realizamos uma análise detalhada do dataset com o objetivo de identificar e corrigir inconsistências que pudessem comprometer a qualidade das análises e a performance dos modelos preditivos. Implementamos as seguintes abordagens:
 
 *  **Remoção de Variáveis Irrelevantes:** Para otimizar e reduzir a dimensionalidade dos dados, simplificar os modelos e evitar possíveis multicolinearidades as variáveis 'Car full name', 'Make', 'Model' foram removidas.
 *  **Renomeação de Variáveis:** Visando facilitar a compreensão e manipulação dos dados, todas as variáveis foram renomeadas para o idioma português.
-* **Tratamento de Valores Faltantes:** Para as variáveis numéricas, utilizamos a imputação pela mediana. Nas variáveis categóricas, optamos pela imputação do valor mais frequente (moda).
+
 * **Transformação de Variáveis para Categóricas:** Para viabilizar uma Análise Exploratória, as variáveis foram convertidas para o tipo 'categórica': 'Type of brakes' (Tipo de freios), 'Drive type' (Tipo de acionamento), 'Number of seats' (Número de assentos), 'Number of door' (Número de portas) e 'Tire size' (Tamanho do pneu). 
 <br>
 <br>
-
 
 ### **6. Análise Univariada**
 ---
@@ -204,7 +207,6 @@ Gráfico-4, **"Distribuição das Variáveis Categóricas"**
 <br>
 
 ![alt text](Plot/Grafico_4_variaveis_categoricas.png)
-
 <br>
 <br>
 
@@ -235,6 +237,8 @@ Pela distribuição do histograma e boxplot, é possível verificar indícios da
 * Capacidade_máxima_carga
 * Potência_máxima_carga
  <br>
+ <br>
+
 
 ### **7. Análise de Correlação**
 
@@ -270,6 +274,7 @@ Gráfico-9, **"Correlação das Preditoras Numéricas com a Target"**
 <br>
 
 Gráficos, **"Correlação das Preditoras Categóricas com a Target"**
+<br>
 <br>
 
 Gráfico-10, **"Tipo de Freios"**
@@ -321,17 +326,15 @@ Gráfico-14, **"Tipo de Pneu"**
 <br>
 <br>
 
+
 ### **8. Desenvolvimento do Projeto**
 ---
 
 ###  ```8.1 Pré Processamento dos Dados ```
 
 A preparação dos dados para modelagem envolve uma etapa de tratamento adicional. Antes desse tratamento, dividiremos o conjunto de dados em treino e teste. Essa estratégia é fundamental para evitar o "data leakage", ou vazamento de dados, durante o treinamento, assegurando que o modelo não tenha acesso às informações dos dados de teste, o que garante sua confiabilidade e capacidade de generalização em cenários reais.
-<br>
 
 O processo de **tratamento** envolve as seguintes etapas:
-
----
 
 * **Divisão dos Dados:** Primeiro dividimos os dados em treino e teste (70% Treino e 30% Teste).
   
@@ -347,9 +350,13 @@ O processo de **tratamento** envolve as seguintes etapas:
  <br>
  <br>
 
- O processo de **modelagem** envolve as seguintes etapas:
+###  ```8.2 Modelagem dos Dados ```
 
 ---
+
+ O processo de **modelagem** envolve as seguintes etapas:
+<br>
+
 
 * **Seleção de Features:** Utilizamos o método RFE (Recursive Feature Elimination), um algoritmo de seleção de features que elimina aquelas que menos contribuem para a precisão do modelo.
 
@@ -359,7 +366,9 @@ O processo de **tratamento** envolve as seguintes etapas:
 
 * **Métricas de Avaliação:**
 <u>RMSE (Root Mean Squared Error)</u>, Raiz quadrada do erro médio quadrático, que mede a magnitude média dos erros entre as previsões do modelo e os valores reais, sendo mais sensível a outliers.
-<u>R² (Coeficiente de Determinação)</u>, Quantifica a proporção da variância na variável dependente que é explicada pelo modelo, variando de 0 a 1, onde valores próximos a 1 indicam um bom ajuste do modelo aos dados.
+<br>
+
+  <u>R² (Coeficiente de Determinação)</u>, Quantifica a proporção da variância na variável dependente que é explicada pelo modelo, variando de 0 a 1, onde valores próximos a 1 indicam um bom ajuste do modelo aos dados.
 <br>
 <br>
 
@@ -396,6 +405,7 @@ Gráfico-17, **"Comparação entre Consumo Real e Previsto"**
 <br>
 
 ![alt text](Plot/Grafico_17_resultado.png)
+
 <br>
 <br>
 
@@ -403,4 +413,25 @@ No entanto, reconhecemos que há oportunidades para melhorias e sugerimos os seg
 
 * **Área de negócios:** para identificar quais features são mais importantes, evitando a eliminação de variáveis essenciais ao utilizar métodos de seleção e deixando a critério do algoritmo escolher as melhores features.
 * **Ajustar os hiperparâmetros:** para alcançar um desempenho ainda melhor, explorando configurações que possam otimizar os resultados.
+<br>
+
 Com isso, concluímos este projeto e abrimos caminho para futuras melhorias e refinamentos.
+<br>
+<br>
+
+
+### **10. Referências Bibliográficas**
+---
+
+ Pavan, Fernanda. (2024). **Prevendo o Consumo de Energia de Carros Elétricos.** Conclusão Acadêmica da Formação de Cientista de Dados. Data Science Academy, São Paulo, Brasil. Desenvolvido sob Mentoria dos Profissionais da Instituição. 
+
+ Clique aqui para visitar a [Data Science Academy](https://www.datascienceacademy.com.br)
+
+ <br>
+
+ 
+  Hadasik, Bartłomiej; Kubiczek, Jakub (2021), “Dataset of electric passenger cars with their specifications”, Mendeley Data, V2, doi: 10.17632/tb9yrptydn.2
+
+  Clique aqui para baixar o conjunto de dados [Dataset of electric passenger cars with their specifications](https://data.mendeley.com/datasets/tb9yrptydn/2)
+
+
